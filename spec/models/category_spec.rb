@@ -2,31 +2,40 @@ require 'spec_helper'
 
 describe Category do
 
+  fixtures :categories
+
   context "CRUD" do
 
-   context "create" do
-      it "should be save" do
-          category = Category.new(name: "Pedreiro")
-          category.save.should be_true
-      end
-    end
+   before(:each) do
+     @category = Category.new(valid_category_hash)
+   end
 
-    context "validation" do
-      it "should not be saved" do
-          category = Category.new
-          category.valid?.should be_false
-          category.save.should_not be_true
-      end
-    end
+   it "should be save" do
+    @category.save.should be_true
+   end
 
-    context "update" do
-      pending "change datas"
-    end
+   it "should update first category" do
+    category = categories(:first_category)
+    category.update_attributes(name: "Updated Category").should be_true
+   end
 
-    context "destroy" do
-      pending "some category"
-    end
+   it "should destroy first category " do
+    category = categories(:first_category)
+    category.destroy
+    expect {Category.find(category.id)}.to raise_error(ActiveRecord::RecordNotFound)
+   end
 
+   context "validation" do
+    it "should not be valid without name" do
+      @category.name = ""
+      @category.should_not be_valid
+    end
+   end
+
+  end
+
+  def valid_category_hash
+    {name: "Pedreiro"}
   end
 
 end
