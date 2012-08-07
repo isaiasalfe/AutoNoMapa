@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Profile do
 
+  fixtures :profiles
+
   context "CRUD" do
 
     before(:each) do
@@ -13,6 +15,16 @@ describe Profile do
       @profile.save.should be_true
     end
 
+    it "should update first profile" do
+      first_profile = profiles(:first_profile)
+      first_profile.update_attributes(nickname: "New nockname").should be_true
+    end
+
+    it "should destroy first profile" do
+      first_profile = profiles(:first_profile)
+      first_profile.destroy.should be_true
+      expect {Profile.find(first_profile.id)}.to raise_error(ActiveRecord::RecordNotFound)
+    end
 
     context "validations" do
       it "should validates presence of name" do
