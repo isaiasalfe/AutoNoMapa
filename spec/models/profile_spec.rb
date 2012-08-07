@@ -7,8 +7,8 @@ describe Profile do
   context "CRUD" do
 
     before(:each) do
-       @profile = Profile.new(valid_profile_hash)
-
+      @profile = Profile.new(valid_profile_hash)
+      @profile.categories<< mock_category
     end
 
     it "should be saved" do
@@ -17,6 +17,7 @@ describe Profile do
 
     it "should update first profile" do
       first_profile = profiles(:first_profile)
+      first_profile.categories<< mock_category
       first_profile.update_attributes(nickname: "New nockname").should be_true
     end
 
@@ -54,10 +55,21 @@ describe Profile do
         @profile.errors[:experience].should eql(["can't be blank"])
         @profile.should_not be_valid
       end
+
+      it "should validates associated with categories" do
+        @profile.categories.clear
+        @profile.invalid?(:categories).should be_true
+        @profile.errors[:categories].should eql(['require at least one category'])
+        @profile.should_not be_valid
+      end
     end
   end
 
   def valid_profile_hash
     {name: "Lucas", nickname: "Lucas Pintor", cell_phone: "(35) 000-000", phone: "(35)000-000", experience: "Ha 20 anos trabalhando com pintura"}
+  end
+
+  def mock_category
+    mock_model(Category)
   end
 end
