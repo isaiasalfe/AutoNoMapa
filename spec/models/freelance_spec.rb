@@ -8,7 +8,7 @@ describe Freelance do
     it "should have one profile" do
       freelance = freelances(:first_freelance)
       profile = freelance.build_profile(profile_hash)
-     # profile.categories<< mock_model(Category)
+      profile.categories<< mock_model(Category)
       lambda {profile.save!}.should_not raise_error
     end
   end
