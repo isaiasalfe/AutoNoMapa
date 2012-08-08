@@ -1,4 +1,5 @@
 class Profile < ActiveRecord::Base
+
   attr_accessible :cell_phone, :experience, :name, :nickname, :phone
 
   has_and_belongs_to_many :categories
