@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808132955) do
+ActiveRecord::Schema.define(:version => 20120808162730) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -48,8 +48,9 @@ ActiveRecord::Schema.define(:version => 20120808132955) do
     t.string   "cell_phone"
     t.string   "nickname"
     t.string   "experience"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "freelance_id"
   end
 
 end
